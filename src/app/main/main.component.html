@@ -1,0 +1,72 @@
+<div class="container main" *ngIf="item">
+    <div>
+        <h1 class="main-header__adress">{{item.Adres}}
+            <span class="main-header__adress-city">{{item.Postcode}} {{item.Plaats}}</span>
+        </h1>
+    </div>
+    <div>
+        <strong>
+            <span [innerHTML]="item.PrijsGeformatteerd"></span>
+        </strong>
+    </div>
+    <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+    <div class="col-12 main__media-row">
+        <a href="#" (click)="openPreview($event)">
+            <fa class="main__media-icon" name="clone"></fa>
+            Foto's
+            <span class="main__description-item-title">{{galleryImages.length}}</span>
+        </a>
+    </div>
+    <div class="row main__icons">
+        <div class="col-md-3 col-6 main__icons-item">
+            <fa class="main__icons-icon" name="home"></fa>
+            <div>
+                <strong>Bouwjaar</strong>
+            </div>
+            <div>{{item.Bouwjaar}}</div>
+        </div>
+        <div class="col-md-3 col-6 main__icons-item">
+            <fa class="main__icons-icon" name="square"></fa>
+            <div>
+                <strong>Woonoppervlakte</strong>
+            </div>
+            <div>{{item.WoonOppervlakte}} m
+                <sup>2</sup>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 main__icons-item">
+            <fa class="main__icons-icon" name="building"></fa>
+            <div>
+                <strong>Aantal kamers</strong>
+            </div>
+            <div>{{item.AantalKamers}}</div>
+        </div>
+        <div class="col-md-3 col-6 main__icons-item">
+            <fa class="main__icons-icon" name="puzzle-piece"></fa>
+            <div>
+                <strong>Perceeloppervlakte</strong>
+            </div>
+            <div>{{item.PerceelOppervlakte}} m
+                <sup>2</sup>
+            </div>
+        </div>
+    </div>
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15" class="col-md-44">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    </agm-map>
+    <h2 class="main__subtitle">Omschrijving</h2>
+    <div class="col-md-8 main__full-description" [class.main__full-description--full]="isDescriptionOpen">
+        {{item.VolledigeOmschrijving}}
+    </div>
+    <a href="#" (click)="showFullDescription($event)" *ngIf="!isDescriptionOpen">
+        <fa name="plus"></fa>Lees de volledige omschrijving</a>
+    <h2 class="main__subtitle">Kenmerken</h2>
+    <div class="col-md-8" *ngFor="let thing of item.Kenmerken">
+        <h3 class="main__description-title">{{thing.Titel}}</h3>
+        <div class="row main__description-item" *ngFor="let thingy of thing.Kenmerken">
+            <span class="col-md-6 col-12 main__description-item-title">{{thingy.Naam}}</span>
+            <span class="col-md-4 col-12" [innerHTML]="thingy.Waarde"></span>
+        </div>
+
+    </div>
+</div>
